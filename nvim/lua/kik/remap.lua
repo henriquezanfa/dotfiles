@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "-", vim.cmd.Ex)
+vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory" })
 
 vim.keymap.set("n", "<C-p>", "<C-b>")  -- page up (C-b is vim's default)
 
@@ -24,6 +24,19 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 
 vim.keymap.set("i", "jj", "<ESC>")
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
+-- wraps with ', ", (, [, {
+vim.keymap.set("v", "\"", "c\"\"<ESC>P")
+vim.keymap.set("v", "\'", "c\'\'<ESC>P")
+vim.keymap.set("v", "(", "c()<ESC>P")
+vim.keymap.set("v", "[", "c[]<ESC>P")
+vim.keymap.set("v", "[", "c{}<ESC>P")
+vim.keymap.set("v", "`", "c``<ESC>P")
 
+-- resize
+vim.keymap.set("n", "L", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+vim.keymap.set("n", "H", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+vim.keymap.set("n", "J", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+vim.keymap.set("n", "K", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
