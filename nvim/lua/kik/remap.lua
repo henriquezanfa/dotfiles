@@ -3,6 +3,10 @@ vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "Open parent directory" })
 
 vim.keymap.set("n", "<C-p>", "<C-b>")  -- page up (C-b is vim's default)
 
+vim.keymap.set({'n', 't'}, '<leader>tt', function()
+  vim.cmd('ToggleTerm')
+end, { silent = true, desc = 'Toggle Terminal' })
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 
