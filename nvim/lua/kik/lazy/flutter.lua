@@ -13,6 +13,9 @@ return {
 					virtual_text = true,
 				},
 			},
+      debugger = {
+        enabled = true,
+      }
 		})
 	end,
 }
