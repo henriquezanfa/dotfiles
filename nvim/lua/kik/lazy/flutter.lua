@@ -8,14 +8,11 @@ return {
 			fvm = true,
 			lsp = {
 				capabilities = capabilities,
-				color = {
+				document_color = {
 					enabled = true,
 					virtual_text = true,
 				},
 			},
-      debugger = {
-        enabled = true,
-      }
 		})
 	end,
 }

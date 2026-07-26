@@ -55,5 +55,11 @@ return {
     dap.listeners.before.event_exited.dapui_config = function()
       ui.close()
     end
+
+    vim.api.nvim_create_user_command("Run", function()
+      local dap = require("dap")
+
+        dap.continue()
+    end, {})
   end
 }
