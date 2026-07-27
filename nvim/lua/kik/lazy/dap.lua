@@ -36,6 +36,32 @@ return {
     -- just stay stopped instead of being silently auto-continued.
     dap.defaults.dart.auto_continue_if_many_stopped = false
 
+    -- Workaround for a Dart debug_adapter quirk: it reports a completed step
+    -- (F2/F3/F4) with reason = "pause" instead of the conventional "step".
+    -- nvim-dap's own should_jump heuristic (dap/session.lua) treats
+    -- reason == "pause" as an uninteresting/background stop and skips moving
+    -- the cursor/arrow entirely - even though the adapter already resolved
+    -- the correct new location. Net effect: stepping silently does nothing.
+    -- If nothing is currently focused (stopped_thread_id is nil) when this
+    -- happens, the stop is real and we should show it; Session:_frame_set
+    -- does the same cursor-jump/sign-placement/scopes-fetch the built-in
+    -- handler would have done, we just have to trigger it ourselves.
+    dap.listeners.after.event_stopped["dart_pause_reason_workaround"] = function(session, body)
+      if session.stopped_thread_id then
+        return
+      end
+      if body.reason ~= "pause" or body.allThreadsStopped then
+        return
+      end
+      local thread = session.threads[body.threadId]
+      local frame = thread and thread.frames and thread.frames[1]
+      if not frame then
+        return
+      end
+      session.stopped_thread_id = body.threadId
+      session:_frame_set(frame)
+    end
+
     vim.keymap.set("n", "<space>b", dap.toggle_breakpoint)
     vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
 
