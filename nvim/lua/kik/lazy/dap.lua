@@ -8,7 +8,30 @@ return {
     local dap = require("dap")
     local ui = require("dapui")
 
-    require("dapui").setup()
+    require("dapui").setup({
+      layouts = {
+        {
+          -- Panels on the left side
+          elements = {
+            { id = "scopes", size = 0.25 },
+            { id = "breakpoints", size = 0.25 },
+            { id = "watches", size = 0.25 },
+            { id = "stacks", size = 0.25 },
+          },
+          position = "left", -- Can be "left", "right", "top", or "bottom"
+          size = 40,         -- Width in columns (or height if position is top/bottom)
+        },
+        {
+          -- Panels at the bottom
+          elements = {
+            { id = "repl", size = 1.0 }, -- Only show the REPL
+            -- "console" removed!
+          },
+          position = "bottom",
+          size = 10, -- lines
+        },
+      }
+    })
 
     -- DapStopped's default sign asks for linehl = 'debugPC' (a Termdebug
     -- highlight group we never define), so only the arrow shows and not a
@@ -25,6 +48,9 @@ return {
       command = "flutter",
       args = { "debug_adapter" },
     }
+
+    -- Prevent nvim-dap from automatically pausing on uncaught exceptions
+    dap.defaults.fallback.exception_breakpoints = {}
 
     -- Flutter apps run multiple isolates (threads, in DAP terms). By default
     -- nvim-dap auto-resumes any isolate that reports "stopped" while a
@@ -75,33 +101,30 @@ return {
     vim.keymap.set("n", "<F3>", dap.step_over)
     vim.keymap.set("n", "<F4>", dap.step_out)
     vim.keymap.set("n", "<F5>", dap.step_back)
-    -- Flutter's hot reload/restart, sent to the already-running session:
-    -- no new process, no cold compile. This is what VS Code's lightning-bolt
-    -- buttons actually do. dap.restart() (F13) instead kills and relaunches
-    -- the whole flutter debug_adapter process from scratch, i.e. slow.
-    vim.keymap.set("n", "<F6>", function()
-      local session = dap.session()
-      if session then session:request("hotReload") end
+    vim.keymap.set("n", "<F12>", dap.restart)
+    
+    vim.keymap.set("n", "td", function()
+      ui.toggle({layout = 1})
     end)
-    vim.keymap.set("n", "<F7>", function()
-      local session = dap.session()
-      if session then session:request("hotRestart") end
-    end)
-    vim.keymap.set("n", "<F13>", dap.restart)
+    -- 1. When the debug session starts: Open ONLY the bottom tray (Layout 2 - REPL/console)
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+      ui.open({ layout = 2 })
+    end
 
-    dap.listeners.before.attach.dapui_config = function()
-      ui.open()
+    -- 2. Open the left sidebar ONLY if execution stopped because of a breakpoint
+    dap.listeners.after.event_stopped["dapui_config"] = function(session, body)
+      if body and (body.reason == "breakpoint" or body.reason == "function breakpoint") then
+        ui.open({ layout = 1 })
+      end
     end
-    dap.listeners.before.launch.dapui_config = function()
-      ui.open()
-    end
-    dap.listeners.before.event_terminated.dapui_config = function()
-      ui.close()
-    end
-    dap.listeners.before.event_exited.dapui_config = function()
+    -- 3. When debugging ends or exits: Close all windows
+    dap.listeners.before.event_terminated["dapui_config"] = function()
       ui.close()
     end
 
+    dap.listeners.before.event_exited["dapui_config"] = function()
+      ui.close()
+    end
     vim.api.nvim_create_user_command("Run", function()
       local dap = require("dap")
 
