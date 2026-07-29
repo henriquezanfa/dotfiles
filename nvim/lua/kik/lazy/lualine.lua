@@ -1,7 +1,7 @@
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  opts = function() 
+  opts = function()
     local colors = {
       blue   = '#80a0ff',
       cyan   = '#79dac8',
@@ -30,6 +30,19 @@ return {
       },
     }
 
+    local function winbar_path()
+      local raw = vim.api.nvim_buf_get_name(0)
+      if raw == '' then
+        return ''
+      end
+      local path = raw:gsub('^%w+://', '')
+      path = vim.fn.fnamemodify(path, ':.')
+      if path == '' or path == '.' then
+        return ''
+      end
+      return path
+    end
+
     return {
       options = {
         theme = bubbles_theme,
@@ -38,7 +51,7 @@ return {
       },
       sections = {
         lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
-        lualine_b = { 
+        lualine_b = {
           'branch',
           'diagnostics'
         },
@@ -55,6 +68,12 @@ return {
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},
+      },
+      winbar = {
+        lualine_c = { { winbar_path } },
+      },
+      inactive_winbar = {
+        lualine_c = { { winbar_path } },
       },
       tabline = {},
       extensions = {},

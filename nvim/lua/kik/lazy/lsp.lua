@@ -36,6 +36,9 @@ return {
             workspace = { checkThirdParty = false },
             codeLens = { enable = true },
             completion = { callSnippet = "Replace" },
+            diagnostics = {
+              globals = { "vim" }
+            },
             doc = { privateName = { "^_" } },
             hint = {
               enable = true,
