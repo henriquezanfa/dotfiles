@@ -7,12 +7,5 @@ return {
   },
   opts = {
     fvm = true,
-    lsp = {
-      capabilities = capabilities,
-      document_color = {
-        enabled = true,
-        virtual_text = true,
-      },
-    },
   }
 }
