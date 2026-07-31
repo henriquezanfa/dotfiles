@@ -49,6 +49,15 @@ return {
       args = { "debug_adapter" },
     }
 
+    dap.configurations.dart = {
+      {
+        type = "dart",
+        request = "launch",
+        name = "Launch flutter",
+        program = "lib/main.dart",
+      },
+    }
+
     -- Prevent nvim-dap from automatically pausing on uncaught exceptions
     dap.defaults.fallback.exception_breakpoints = {}
 
