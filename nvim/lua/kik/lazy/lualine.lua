@@ -3,26 +3,27 @@ return {
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   opts = function()
     local colors = {
-      blue   = '#80a0ff',
-      cyan   = '#79dac8',
-      black  = '#080808',
+      green  = '#a6e3a1',
+      blue   = "#89b4fa",
+      pink   = "#cba6f7",
+      black  = '#11111b',
       white  = '#c6c6c6',
-      red    = '#ff5189',
+      red    = '#f38ba8',
       violet = '#d183e8',
       grey   = '#303030',
     }
 
     local bubbles_theme = {
       normal = {
-        a = { fg = colors.black, bg = colors.violet },
+        a = { fg = colors.black, bg = colors.blue },
         b = { fg = colors.white, bg = colors.grey },
         c = { fg = colors.white },
       },
 
-      insert = { a = { fg = colors.black, bg = colors.blue } },
-      visual = { a = { fg = colors.black, bg = colors.cyan } },
+      insert = { a = { fg = colors.black, bg = colors.green } },
+      visual = { a = { fg = colors.black, bg = colors.pink } },
       replace = { a = { fg = colors.black, bg = colors.red } },
-
+      command = { a = { fg = colors.black, bg = colors.red } },
       inactive = {
         a = { fg = colors.white, bg = colors.black },
         b = { fg = colors.white, bg = colors.black },
