@@ -11,6 +11,8 @@ vim.keymap.set({ "n", "t" }, "<leader>tv", function()
 	vim.cmd("vsplit term://zsh")
 end, { silent = true, desc = "Toggle Terminal" })
 
+vim.keymap.set("v", "y", '"+y', {})
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.fillchars = { eob = " " }
