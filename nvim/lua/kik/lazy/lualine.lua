@@ -17,7 +17,7 @@ return {
       normal = {
         a = { fg = colors.black, bg = colors.blue },
         b = { fg = colors.white, bg = colors.grey },
-        c = { fg = colors.white },
+        c = { fg = colors.white, bg = nil },
       },
 
       insert = { a = { fg = colors.black, bg = colors.green } },
@@ -27,21 +27,12 @@ return {
       inactive = {
         a = { fg = colors.white, bg = colors.black },
         b = { fg = colors.white, bg = colors.black },
-        c = { fg = colors.white },
+        c = { fg = colors.white, bg = nil },
       },
     }
 
     local function winbar_path()
-      local raw = vim.api.nvim_buf_get_name(0)
-      if raw == '' then
-        return ''
-      end
-      local path = raw:gsub('^%w+://', '')
-      path = vim.fn.fnamemodify(path, ':.')
-      if path == '' or path == '.' then
-        return ''
-      end
-      return path
+      return ' '
     end
 
     return {
