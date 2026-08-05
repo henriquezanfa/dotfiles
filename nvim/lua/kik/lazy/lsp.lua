@@ -56,22 +56,6 @@ return {
   config = function(_, opts)
     vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-    local on_attach = function(_, bufnr)
-      local map = function(mode, lhs, rhs, desc)
-        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-      end
-      map("n", "gd", vim.lsp.buf.definition, "Goto Definition")
-      map("n", "gr", vim.lsp.buf.references, "References")
-      map("n", "gI", vim.lsp.buf.implementation, "Goto Implementation")
-      map("n", "gy", vim.lsp.buf.type_definition, "Goto Type Definition")
-      map("n", "gD", vim.lsp.buf.declaration, "Goto Declaration")
-      map("n", "gk", vim.lsp.buf.hover, "Hover")
-      map("n", "gK", vim.lsp.buf.signature_help, "Signature Help")
-      map("i", "<c-k>", vim.lsp.buf.signature_help, "Signature Help")
-      map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "Code Action")
-      map("n", "<leader>cr", vim.lsp.buf.rename, "Rename")
-    end
-
     if opts.inlay_hints.enabled then
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
@@ -86,15 +70,6 @@ return {
         end,
       })
     end
-
-    vim.api.nvim_create_autocmd("LspAttach", {
-      callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client then
-          on_attach(client, args.buf)
-        end
-      end,
-    })
 
     local capabilities = require("blink.cmp").get_lsp_capabilities()
 

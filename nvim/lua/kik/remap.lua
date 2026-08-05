@@ -11,6 +11,8 @@ vim.keymap.set({ "n", "t" }, "<leader>tv", function()
 	vim.cmd("vsplit term://zsh")
 end, { silent = true, desc = "Toggle Terminal" })
 
+vim.keymap.set("v", "y", '"+y', {})
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.fillchars = { eob = " " }
@@ -25,11 +27,17 @@ vim.opt.exrc = true
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.keymap.set("n", "gk", vim.lsp.buf.hover)
-vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-vim.keymap.set("n", "gr", vim.lsp.buf.references)
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
+vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "References" })
+vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { desc = "Goto Implementation" })
+vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, { desc = "Goto Type Definition" })
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
+vim.keymap.set("n", "gk", vim.lsp.buf.hover, { desc = "Hover" })
+vim.keymap.set("n", "gK", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+vim.keymap.set("i", "<c-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename" })
 
 vim.keymap.set("i", "jj", "<ESC>")
 
