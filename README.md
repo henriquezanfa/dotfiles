@@ -1,7 +1,6 @@
-`git clone git@github.com:henriquezanfa/dotfiles.git ~/dotfiles`
+```
+git clone git@github.com:henriquezanfa/dotfiles.git ~/dotfiles
+~/dotfiles/install.sh
+```
 
-```
-ln -s ~/dotfiles/nvim ~/.config/nvim
-ln -s ~/dotfiles/tmux/.tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/workmux ~/.config/workmux
-```
+`install.sh` symlinks nvim, tmux, workmux, sesh, tuicr and tt into place (existing files are backed up as `*.bak.<timestamp>`), installs sesh via brew, and builds tt with cargo. tuicr must be installed manually.
