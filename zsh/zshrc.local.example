@@ -1,0 +1,5 @@
+# Copy to ~/.zshrc.local and fill in. ~/.zshrc.local is never committed.
+export GITLAB_TOKEN=""
+export FIGMA_API_KEY=""
+
+# alias activate-lc='source /path/to/central-deployment/.venv/bin/activate'
