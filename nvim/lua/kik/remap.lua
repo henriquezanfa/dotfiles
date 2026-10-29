@@ -49,6 +49,12 @@ vim.keymap.set("v", "[", "c[]<ESC>P")
 vim.keymap.set("v", "[", "c{}<ESC>P")
 vim.keymap.set("v", "`", "c``<ESC>P")
 
+vim.keymap.set("i", "{", "{}<ESC>i")
+vim.keymap.set("i", "[", "[]<ESC>i")
+vim.keymap.set("i", "(", "()<ESC>i")
+vim.keymap.set("i", '"', '""<ESC>i')
+vim.keymap.set("i", "'", "''<ESC>i")
+
 -- resize
 -- vim.keymap.set("n", "L", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 -- vim.keymap.set("n", "H", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
