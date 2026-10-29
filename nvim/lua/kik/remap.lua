@@ -50,10 +50,10 @@ vim.keymap.set("v", "[", "c{}<ESC>P")
 vim.keymap.set("v", "`", "c``<ESC>P")
 
 -- resize
-vim.keymap.set("n", "L", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
-vim.keymap.set("n", "H", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
-vim.keymap.set("n", "J", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
-vim.keymap.set("n", "K", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+-- vim.keymap.set("n", "L", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+-- vim.keymap.set("n", "H", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+-- vim.keymap.set("n", "J", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+-- vim.keymap.set("n", "K", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 
