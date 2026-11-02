@@ -26,14 +26,21 @@ link "$DOTFILES/tt"               "$HOME/.config/kik/tt"
 link "$DOTFILES/tmux/.tmux.conf"  "$HOME/.tmux.conf"
 link "$DOTFILES/zsh/.zshrc"       "$HOME/.zshrc"
 
+if [ ! -e "$DOTFILES/sesh/sesh.local.toml" ]; then
+  echo "# Machine-local sesh sessions (gitignored)" > "$DOTFILES/sesh/sesh.local.toml"
+  echo "created  sesh/sesh.local.toml (add machine-specific sessions)"
+fi
+
 if [ ! -e "$HOME/.zshrc.local" ]; then
   cp "$DOTFILES/zsh/zshrc.local.example" "$HOME/.zshrc.local"
   chmod 600 "$HOME/.zshrc.local"
   echo "created  ~/.zshrc.local (fill in secrets)"
 fi
 
-if command -v brew >/dev/null && ! command -v sesh >/dev/null; then
-  brew install sesh
+if command -v brew >/dev/null; then
+  for pkg in sesh fzf fd; do
+    command -v "$pkg" >/dev/null || brew install "$pkg"
+  done
 fi
 
 if command -v cargo >/dev/null; then

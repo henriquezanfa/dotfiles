@@ -1,3 +1,5 @@
+import = ["~/.config/sesh/sesh.local.toml"]
+
 [[session]]
 name = "tmuxconf"
 path = "~/dotfiles/tmux/"
@@ -9,19 +11,3 @@ preview_command = "nano ~/dotfiles/tmux/.tmux.conf"
 name = "nvimconfig"
 path = "~/dotfiles/nvim/"
 startup_command = "ls"
-
-[[session]]
-name = "clients"
-path = "~/Projects/frontend/clients"
-startup_command = "workmux list"
-
-[[session]]
-name = "backend"
-path = "~/Projects/backend"
-startup_command = "ls -1A"
-
-[[session]]
-name = "cicd"
-path = "~/Projects/cicd/"
-startup_command = "ls -1A"
-
