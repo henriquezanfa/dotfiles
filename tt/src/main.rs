@@ -61,6 +61,9 @@ enum Cmd {
         /// Only show reminders from this list (e.g. "management", "projects", "tasks")
         #[arg(short, long)]
         scope: Option<String>,
+        /// Just print the reminders, skip the interactive picker
+        #[arg(long)]
+        no_interactive: bool,
     },
 }
 
@@ -282,15 +285,22 @@ fn select(items: &[Item]) -> io::Result<Option<Vec<usize>>> {
     Ok(result)
 }
 
-fn list(scope: Option<&str>) -> Result<(), String> {
-    if !io::stdin().is_terminal() || !io::stdout().is_terminal() {
-        return Err("`tt list` needs an interactive terminal".to_string());
-    }
+fn list(scope: Option<&str>, no_interactive: bool) -> Result<(), String> {
     let store = open_store()?;
     let items = fetch_open(&store, scope)?;
     if items.is_empty() {
         println!("No open reminders.");
         return Ok(());
+    }
+    if no_interactive {
+        for it in &items {
+            let due = if it.due.is_empty() { String::new() } else { format!("  ({})", it.due) };
+            println!("{}{}", it.title, due);
+        }
+        return Ok(());
+    }
+    if !io::stdin().is_terminal() || !io::stdout().is_terminal() {
+        return Err("`tt list` needs an interactive terminal".to_string());
     }
     let Some(picked) = select(&items).map_err(|e| e.to_string())? else {
         return Ok(());
@@ -307,8 +317,8 @@ fn list(scope: Option<&str>) -> Result<(), String> {
 
 fn main() {
     let cli = Cli::parse();
-    if let Some(Cmd::List { scope }) = cli.command {
-        if let Err(e) = list(scope.as_deref()) {
+    if let Some(Cmd::List { scope, no_interactive }) = cli.command {
+        if let Err(e) = list(scope.as_deref(), no_interactive) {
             eprintln!("error: {e}");
             std::process::exit(1);
         }
