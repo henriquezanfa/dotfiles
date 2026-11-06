@@ -1,9 +1,8 @@
 return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-  lazy = false,
+	"RRethy/base16-nvim",
+	lazy = false,
 	priority = 1000,
 	config = function()
-		vim.cmd.colorscheme "catppuccin-mocha"
+		require("base16-colorscheme").setup(require("kik.theme"))
 	end,
 }

@@ -2,15 +2,15 @@ return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   opts = function()
+    local p = require('kik.theme')
     local colors = {
-      green  = '#a6e3a1',
-      blue   = "#89b4fa",
-      pink   = "#cba6f7",
-      black  = '#11111b',
-      white  = '#c6c6c6',
-      red    = '#f38ba8',
-      violet = '#d183e8',
-      grey   = '#303030',
+      green  = p.base0B,
+      blue   = p.base0D,
+      pink   = p.base0E,
+      black  = p.base01,
+      white  = p.base05,
+      red    = p.base08,
+      grey   = p.base02,
     }
 
     local bubbles_theme = {

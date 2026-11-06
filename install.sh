@@ -21,6 +21,7 @@ link() {
 link "$DOTFILES/nvim"             "$HOME/.config/nvim"
 link "$DOTFILES/workmux"          "$HOME/.config/workmux"
 link "$DOTFILES/sesh"             "$HOME/.config/sesh"
+link "$DOTFILES/theme"             "$HOME/.config/theme"
 link "$DOTFILES/tuicr"            "$HOME/.config/tuicr"
 link "$DOTFILES/tt"               "$HOME/.config/kik/tt"
 link "$DOTFILES/tmux/.tmux.conf"  "$HOME/.tmux.conf"

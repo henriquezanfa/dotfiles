@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ $# -ne 1 ] || [ ! -f "$DIR/themes/$1.conf" ]; then
+  echo "usage: theme/use <name>"
+  echo "themes:"
+  ls "$DIR/themes" | sed 's/\.conf$//;s/^/  /'
+  exit 1
+fi
+
+ln -sfn "themes/$1.conf" "$DIR/palette.conf"
+echo "theme: $1"
+
+if tmux info >/dev/null 2>&1; then
+  tmux source-file ~/.tmux.conf
+  echo "tmux reloaded; restart nvim to apply"
+fi
