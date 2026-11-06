@@ -45,6 +45,18 @@ alias j='just'
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
+# Tab accepts the autosuggestion if one is shown, otherwise completes normally
+tab-accept-or-complete() {
+  if [[ -n $POSTDISPLAY ]]; then
+    zle autosuggest-accept
+  else
+    zle expand-or-complete
+  fi
+}
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(tab-accept-or-complete)  # else the plugin clears POSTDISPLAY before we read it
+zle -N tab-accept-or-complete
+bindkey '^I' tab-accept-or-complete
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
