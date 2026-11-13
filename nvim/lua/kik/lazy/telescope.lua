@@ -6,7 +6,13 @@ return {
 		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 	},
 	config = function()
-		require('telescope').setup({})
+		require('telescope').setup({
+			defaults = {
+				borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+				prompt_prefix = "  ",
+				selection_caret = "▌ ",
+			},
+		})
 
 		local preview_utils = require("telescope.previewers.utils")
 		local builtin = require('telescope.builtin')
