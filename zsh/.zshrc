@@ -9,6 +9,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# takes the suggestion
+bindkey '^ ' end-of-line
+
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
@@ -44,18 +47,6 @@ alias wd='workmux dashboard'
 alias j='just'
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
-
-# Tab accepts the autosuggestion if one is shown, otherwise completes normally
-tab-accept-or-complete() {
-  if [[ -n $POSTDISPLAY ]]; then
-    zle autosuggest-accept
-  else
-    zle expand-or-complete
-  fi
-}
-ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(tab-accept-or-complete)  # else the plugin clears POSTDISPLAY before we read it
-zle -N tab-accept-or-complete
-bindkey '^I' tab-accept-or-complete
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
