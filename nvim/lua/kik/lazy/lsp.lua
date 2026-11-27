@@ -30,6 +30,7 @@ return {
       exclude = { "vue" },
     },
     servers = {
+      ts_ls = {},
       lua_ls = {
         settings = {
           Lua = {
